@@ -82,7 +82,7 @@ fn connect_device(
     adb::connect(&addr).map_err(|e| e.to_string())?;
 
     // For wireless devices the `ip:port` address *is* the adb serial.
-    scrcpy::launch_stream(&addr).map_err(|e| format!("stream launch failed: {e}"))
+    scrcpy::launch_client(&addr, scrcpy::BALANCED).map_err(|e| format!("stream launch failed: {e}"))
 }
 
 #[tauri::command]
