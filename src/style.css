@@ -1,0 +1,86 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+#empty-state {
+  margin: auto;
+  text-align: center;
+}
+
+#empty-state h1 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+#empty-state p { opacity: 0.7; margin-bottom: 1.25rem; }
+
+.actions { display: flex; gap: 0.75rem; justify-content: center; }
+
+button {
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+button.primary {
+  background: highlight;
+  color: highlighttext;
+  border-color: transparent;
+}
+
+#device-list {
+  width: 300px;
+  border-inline-end: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  padding: 1rem;
+}
+
+#device-list ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+#device-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.device-name {
+  flex: 1 1 100%;
+  font-weight: 600;
+}
+
+.pair-code {
+  flex: 1;
+  min-width: 0;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+}
+
+#status {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  background: color-mix(in srgb, canvas 85%, transparent);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  opacity: 0.85;
+}
+
+#status.error { color: #e5484d; opacity: 1; }

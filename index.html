@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screencast</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <main id="empty-state">
+        <h1>No phone found</h1>
+        <p>Enable wireless debugging on your phone to get started.</p>
+        <div class="actions">
+          <button id="btn-walkthrough" class="primary">Enable wireless debugging</button>
+          <button id="btn-troubleshoot">Troubleshoot</button>
+        </div>
+      </main>
+      <aside id="device-list" hidden>
+        <h2>Devices</h2>
+        <ul></ul>
+      </aside>
+      <footer id="status"></footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
