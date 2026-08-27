@@ -17,6 +17,7 @@ fn spawn_discovery_pump(app: AppHandle, devices: state::SharedDevices) -> Result
             for event in discovery.poll() {
                 match event {
                     PhoneEvent::Found(phone) => {
+                        log::info!("mdns found: {} at {}", phone.name, phone.address);
                         if let Ok(mut map) = devices.lock() {
                             map.insert(phone.id.clone(), phone.clone());
                         }

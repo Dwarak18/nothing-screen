@@ -32,12 +32,22 @@ pub struct Discovery {
 
 impl Discovery {
     pub fn start() -> Result<Self, String> {
-        let daemon = ServiceDaemon::new().map_err(|e| e.to_string())?;
+        log::info!("discovery: creating mdns ServiceDaemon");
+        let daemon = ServiceDaemon::new().map_err(|e| {
+            log::error!("discovery: ServiceDaemon::new failed: {e}");
+            e.to_string()
+        })?;
         let (tx, rx) = mpsc::channel();
 
         for service in [PAIRING_SERVICE, CONNECT_SERVICE] {
             let tx = tx.clone();
-            let receiver = daemon.browse(service).map_err(|e| e.to_string())?;
+            let receiver = daemon
+                .browse(service)
+                .map_err(|e| {
+                    log::error!("discovery: browse {service} failed: {e}");
+                    e.to_string()
+                })?;
+            log::info!("discovery: browsing {service}");
             thread::spawn(move || {
                 // Blocking listen: mDNS announcements are periodic, so we must
                 // keep listening. The loop exits when the browse monitor closes
@@ -45,6 +55,12 @@ impl Discovery {
                 while let Ok(event) = receiver.recv() {
                     match event {
                         ServiceEvent::ServiceResolved(info) => {
+                            log::info!(
+                                "discovery: resolved {} {}",
+                                info.get_fullname(),
+                                info.get_addresses()
+                                    .iter().next().map(|i| i.to_string()).unwrap_or_default()
+                            );
                             if tx.send(PhoneEvent::Found(to_phone(&info))).is_err() {
                                 break;
                             }
