@@ -24,6 +24,7 @@ const ADB_NAME: &str = if cfg!(windows) { "adb.exe" } else { "adb" };
 /// Resolve the adb binary: env override → next to our executable (bundled)
 /// → dev fallback (`src-tauri/binaries/`) → bare name from PATH.
 pub fn adb_binary() -> PathBuf {
+    // First, check if the environment variable is set.
     if let Ok(p) = std::env::var("NOTHINGCAST_ADB") {
         let p = PathBuf::from(p);
         if p.exists() {
